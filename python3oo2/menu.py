@@ -5,7 +5,7 @@ import os
 resp = 0
 while resp != 5:
     print("----------------------------------Menu-----------------------------------")
-    print("1-Registrar filme\n2-Registrar série\n3-Dar like\n4-Mostrar lista\n5-sair")
+    print("1-Registrar filme\n2-Registrar série\n3-Dar like\n4-Mostrar playlist\n5-sair")
     resp = int(input())
     if resp == 1:
         modelo.registra_programa(1)
