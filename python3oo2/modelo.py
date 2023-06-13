@@ -44,14 +44,19 @@ class Serie(Programa):
         return f'Nome: {self._nome}\nData de lançamento: {self.ano}\nTemporadas: {self.temporadas}\nLikes: {self._like}'
 
 
-class Playlist(list):
+class Playlist:
     def __init__(self, nome, programas):
         self.nome = nome
-        super().__init__(programas)
+        self._programas = programas
 
+    def __getitem__(self, item):
+        return self._programas[item]
 
-filmes_e_series = []
-playlist_fds = Playlist("Fim de Semana", filmes_e_series)
+    def __call__(self, value):
+        self._programas.append(value)
+
+    def __len__(self):
+        return len(self._programas)
 
 
 def registra_programa(tipo):
@@ -60,17 +65,14 @@ def registra_programa(tipo):
 
     if tipo == 1:
         duracao = input("Entre com a duração em minutos: ")
-        playlist_fds.append(Filme(nome, ano, duracao))
+        playlist_fds(Filme(nome, ano, duracao))
 
     else:
         temporadas = input("Entre com o numero de temporadas: ")
-        playlist_fds.append(Serie(nome, ano, temporadas))
+        playlist_fds(Serie(nome, ano, temporadas))
 
 
 def like():
-    #nome = input("Entre com o nome do filme que deseja dar like").title()
-    #if(nome in playlist_fds):
-
     for i in playlist_fds:
         opt = input(f'Deseja dar like em {i.nome}?(Y/N)')
         if opt.upper() == 'Y':
@@ -78,7 +80,11 @@ def like():
 
 
 def mostra_programa():
-    print(f'Tamanho da playlist: {len(playlist_fds)}')
+    print(f'Tamanho da playlist: {playlist_fds}')
     for i in playlist_fds:
         print(i, "\n")
     time.sleep(4)
+
+
+filmes_e_series = []
+playlist_fds = Playlist("Fim de Semana", filmes_e_series)
